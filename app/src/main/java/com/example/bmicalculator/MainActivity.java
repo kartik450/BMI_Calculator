@@ -27,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
         Text_Result = findViewById(R.id.Text_Result);
 
+        // Remove hints when EditText gains focus
+        removeHintOnFocus(edtWeight, getString(R.string.hint_wt));
+        removeHintOnFocus(HeightFt, getString(R.string.hint_htF));
+        removeHintOnFocus(HeightIn, getString(R.string.hint_htI));
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +67,19 @@ public class MainActivity extends AppCompatActivity {
                 } catch (NumberFormatException e) {
                     // Handle cases where the input is not a valid number
                     Toast.makeText(MainActivity.this, "Please enter valid numbers", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void removeHintOnFocus(EditText editText, String originalHint) {
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    editText.setHint(""); // Remove hint when EditText gains focus
+                } else {
+                    editText.setHint(originalHint); // Restore the hint when EditText loses focus
                 }
             }
         });
